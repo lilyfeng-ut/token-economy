@@ -2,12 +2,12 @@
   const scenarios = {
     support:{
       query:'How do I reset SSO after replacing my phone?',confidence:'96% confidence',purpose:'Support / known answer',complexity:'Low',dataClass:'Internal',reuse:'High · 0.96',
-      policy:['Standard support','tenant-scoped access'],cache:['Semantic reuse','10-minute freshness'],quality:['Verified answer','source required'],budget:['Low budget','under $0.001'],
-      trace:'support_faq → semantic_hit(.96) → verify_scope → serve',tokens:'420 <small>/ 3,200</small>',latency:'84 ms',cost:'−93%',hit:true,
+      policy:['Standard support','tenant-scoped access'],cache:['Policy-aware reuse','effective-at time · version match'],quality:['Verified answer','source required'],budget:['Low budget','under $0.001'],
+      trace:'support_faq → semantic_hit(.96) → policy_version_match → serve',tokens:'420 <small>/ 3,200</small>',latency:'84 ms',cost:'−93%',hit:true,
       nodes:[
         ['Admit request','Known support intent is safe for automated handling.','allow','neutral'],
         ['Build minimal context','Keep identity, product tier, and the current SSO policy.','420 tokens','save'],
-        ['Reuse approved','FAQ match passes tenant scope and freshness checks.','hit · .96','save'],
+        ['Reuse approved','Cached answer matches the policy version effective at request time.','version matched','save'],
         ['Skip model routing','Cached answer already clears the quality threshold.','no model call','save'],
         ['Serve cached answer','Attach source version and an escalation option.','84 ms','save'],
         ['Record avoided call','Attribute saved cost while monitoring user resolution.','−93% cost','save']
